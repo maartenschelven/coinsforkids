@@ -1,0 +1,135 @@
+<html>
+<head>
+    <title>My first Three.js app</title>
+    <style>
+        body { margin: 0; }
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+
+<input type="submit" name="change rims baby" onclick="changeRims()">Change the rims</input>
+
+<script src="three.min.js"></script>
+<script>
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    var wheelTexture = new THREE.TextureLoader().load( "wheel.jpg" );
+    wheelTexture.wrapS = THREE.RepeatWrapping;
+    wheelTexture.wrapT = THREE.RepeatWrapping;
+    wheelTexture.repeat.set( 1, 1 );
+
+    // Wheels
+    function addWheel(wheelTexture, y ,x, radius) {
+        var wheelOneGeometry = new THREE.CylinderGeometry(radius,0.8,0.3,32);
+        var wheelOneMaterial = new THREE.MeshBasicMaterial( {map: wheelTexture} );
+        var wheelSphere = new THREE.Mesh( wheelOneGeometry, wheelOneMaterial );
+        scene.add( wheelSphere );
+        wheelSphere.position.z = 0;
+        wheelSphere.position.y = y;
+        wheelSphere.position.x = x;
+        wheelSphere.rotation.x = 1.5;
+
+        return wheelSphere
+    }
+
+
+    var wheelOneSphere = addWheel(wheelTexture, 0.6,-4.4,1.2);
+    var wheelTwoSphere = addWheel(wheelTexture, 0.4, 3.8,1.4);
+
+    // Car
+    var carTexture = new THREE.TextureLoader().load( "car.jpg" );
+    carTexture.wrapS = THREE.RepeatWrapping;
+    carTexture.wrapT = THREE.RepeatWrapping;
+    carTexture.repeat.set( 1, 1 );
+    var carGeometryBackground = new THREE.PlaneGeometry( 15, 5 );
+    var carMaterialBackground = new THREE.MeshBasicMaterial( {map: carTexture, side: THREE.DoubleSide} );
+    var carPlaneBackground = new THREE.Mesh( carGeometryBackground, carMaterialBackground );
+    scene.add( carPlaneBackground );
+    carPlaneBackground.position.z = -1
+    carPlaneBackground.position.y = 2
+
+
+    // Spotlight
+    var spotLight = new THREE.SpotLight( 0xffffff );
+    spotLight.position.set( 10, 10, 10 );
+    spotLight.angle = Math.PI / 8;
+    spotLight.castShadow = true;
+    spotLight.shadow.mapSize.width = 1024;
+    spotLight.shadow.mapSize.height = 1024;
+    spotLight.shadow.camera.near = 500;
+    spotLight.shadow.camera.far = 4000;
+    spotLight.shadow.camera.fov = 30;
+    scene.add( spotLight );
+
+    // AmbientLight
+    var light = new THREE.AmbientLight( 0xffffff, 0.5 ); // soft white light
+    scene.add( light);
+
+    // Road background
+    var roadTexture = new THREE.TextureLoader().load( "road.jpg" );
+    roadTexture.wrapS = THREE.RepeatWrapping;
+    roadTexture.wrapT = THREE.RepeatWrapping;
+    roadTexture.repeat.set( 1, 1 );
+    var geometryBackground = new THREE.PlaneGeometry( 15000, 5 );
+    var materialBackground = new THREE.MeshBasicMaterial( {map: roadTexture, side: THREE.DoubleSide} );
+    var planeBackground = new THREE.Mesh( geometryBackground, materialBackground );
+    scene.add( planeBackground );
+    planeBackground.position.y = -2.2
+    planeBackground.position.z = -2
+
+
+    var rotationY = 0.05;
+    var positionX = 0.00;
+    var cary = -0.0;
+    camera.position.z = 5;
+
+    var render = function () {
+        requestAnimationFrame( render );
+        wheelTwoSphere.rotation.y += rotationY;
+        wheelOneSphere.rotation.y += rotationY;
+        planeBackground.position.x += positionX;
+
+        console.log(carPlaneBackground.position.y);
+
+        if (carPlaneBackground.position.y > 1.8) {
+            carPlaneBackground.position.y += cary;
+        }
+
+        renderer.render(scene, camera);
+    };
+
+    function changeRims() {
+        console.log("reached");
+
+        scene.remove(wheelTwoSphere);
+        scene.remove(wheelOneSphere);
+
+        wheelTexture = new THREE.TextureLoader().load( "oldskoolwheel.jpg" );
+        wheelTexture.wrapS = THREE.RepeatWrapping;
+        wheelTexture.wrapT = THREE.RepeatWrapping;
+        wheelTexture.repeat.set( 1, 1 );
+        wheelOneSphere = addWheel(wheelTexture, 0.6,-4.4,1.2);
+        wheelTwoSphere = addWheel(wheelTexture, 0.4, 3.8,1.4);
+        positionX = 5.05;
+        cary = -0.0005;
+
+
+        var audio = document.createElement('audio');
+        var source = document.createElement('source');
+        source.src = 'sound.mp3';
+        audio.appendChild(source);
+        audio.play();
+    }
+
+
+
+    render();
+</script>
+</body>
+</html>
