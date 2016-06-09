@@ -26,8 +26,29 @@
     controls.dampingFactor = 0.25;
     controls.enableZoom = false;
 
-    var oneCentCoin = new Coin("1", 0.01);
+    var oneCentCoin = new Coin(1,"1", "cent", 0.01, {x:-10, y: 6});
     scene.add(oneCentCoin.getCoinCylinder());
+
+    var twoCentCoin = new Coin(2,"2", "cent", 0.01, {x:-8.5, y: 6});
+    scene.add(twoCentCoin.getCoinCylinder());
+
+    var fiveCentCoin = new Coin(3,"5", "cent", 0.01, {x:-7, y: 6});
+    scene.add(fiveCentCoin.getCoinCylinder());
+
+    var tenCentCoin = new Coin(4,"10", "cent", 0.01, {x:-5.5, y: 6});
+    scene.add(tenCentCoin.getCoinCylinder());
+
+    var twentyCentCoin = new Coin(5,"20", "cent", 0.01, {x:-4, y: 6});
+    scene.add(twentyCentCoin.getCoinCylinder());
+
+    var fiftyCentCoin = new Coin(6,"50", "cent", 0.01, {x:-2.5, y: 6});
+    scene.add(fiftyCentCoin.getCoinCylinder());
+
+    var oneEuroCoin = new Coin(7,"1", "euro", 0.01, {x:-1.0, y: 6});
+    scene.add(oneEuroCoin.getCoinCylinder());
+
+    var twoEruoCoin = new Coin(8,"2", "euro", 0.01, {x:0.5, y: 6});
+    scene.add(twoEruoCoin.getCoinCylinder());
 
     var balk = new Balk();
     scene.add(balk.createBalk(scene));
@@ -39,8 +60,54 @@
     var render = function () {
         requestAnimationFrame( render );
 
-        oneCentCoin.startDropAnimation();
+        console.log("render");
+        if (oneCentCoin.startDropSelectAnimation()) {
+            if (oneCentCoin.rollThroughBalk()){
+                if (oneCentCoin.startDropToPiggyBank()) {
 
+                }
+            }
+        }
+
+        if (twoCentCoin.startDropSelectAnimation()) {
+            if (twoCentCoin.rollThroughBalk()){
+                if (twoCentCoin.startDropToPiggyBank()) {
+
+                }
+            }
+        }
+
+        if (fiveCentCoin.startDropSelectAnimation()) {
+            if (fiveCentCoin.rollThroughBalk()){
+                if (fiveCentCoin.startDropToPiggyBank()) {
+
+                }
+            }
+        }
+
+        if (tenCentCoin.startDropSelectAnimation()) {
+            if (tenCentCoin.rollThroughBalk()){
+                if (tenCentCoin.startDropToPiggyBank()) {
+
+                }
+            }
+        }
+
+        if (twentyCentCoin.startDropSelectAnimation()) {
+            if (twentyCentCoin.rollThroughBalk()){
+                if (twentyCentCoin.startDropToPiggyBank()) {
+
+                }
+            }
+        }
+
+        if (fiftyCentCoin.startDropSelectAnimation()) {
+            if (fiftyCentCoin.rollThroughBalk()){
+                if (fiftyCentCoin.startDropToPiggyBank()) {
+
+                }
+            }
+        }
         controls.update();
         renderer.render(scene, camera);
     };
