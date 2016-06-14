@@ -78,9 +78,9 @@ function Coin(placeInRow, name, type, value, position) {
     this.rollThroughBalk = function() {
 
         if (this.coinCylinder.position.x < 7) {
-            this.coinCylinder.rotation.y = this.coinCylinder.rotation.y - 0.4;
-            this.coinCylinder.position.x = this.coinCylinder.position.x + 0.1;
-            this.coinCylinder.position.y = this.coinCylinder.position.y - 0.020;
+            this.coinCylinder.rotation.y += -0.2;
+            this.coinCylinder.position.x += 0.06;
+            this.coinCylinder.position.y += -0.012;
             return false;
         } else {
             return true;
@@ -88,12 +88,8 @@ function Coin(placeInRow, name, type, value, position) {
     }
 
     this.startDropToPiggyBank = function () {
-        if (this.coinCylinder.position.y > -7) {
-            this.coinCylinder.rotation.y = this.coinCylinder.rotation.y - 0.2;
-            this.coinCylinder.rotation.x = this.coinCylinder.rotation.x - 0.04;
-            this.coinCylinder.rotation.z = this.coinCylinder.rotation.z - 0.02;
-
-            this.coinCylinder.position.y = this.coinCylinder.position.y - 0.05;
+        if (this.coinCylinder.position.y > -5) {
+            this.coinCylinder.position.y += - 0.05;
             return false;
         } else {
             return true;

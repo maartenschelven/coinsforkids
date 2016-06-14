@@ -12,6 +12,7 @@
 <script src="js/lib/OrbitControls.js"></script>
 <script src="js/coin.js"></script>
 <script src="js/balk.js"></script>
+<script src="js/varken.js"></script>
 
 
 <script>
@@ -19,7 +20,7 @@
     var renderer = new THREE.WebGLRenderer();
 
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-    camera.position.z = 10;
+    camera.position.z = 12;
 
     controls = new THREE.OrbitControls( camera, renderer.domElement );
     controls.enableDamping = true;
@@ -51,8 +52,10 @@
     scene.add(twoEruoCoin.getCoinCylinder());
 
     var balk = new Balk();
-    scene.add(balk.createBalk(scene));
+    balk.createBalk(scene);
 
+    var varken = new Varken();
+    varken.createVarken(scene);
 
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
