@@ -16,6 +16,8 @@
 
 
 <script>
+
+    var radje = 0;
     var scene = new THREE.Scene();
     var renderer = new THREE.WebGLRenderer();
 
@@ -55,10 +57,15 @@
     balk.createBalk(scene);
 
     var varken = new Varken();
-    varken.createVarken(scene);
+    var piggy = varken.createVarken(scene);
 
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
+
+    var origPupilLeftY = piggy.pupilLeft.position.y;
+    var origPupilLeftZ = piggy.pupilLeft.position.z;
+    var origPupilRightY = piggy.pupilRight.position.y;
+    var origPupilRightZ = piggy.pupilRight.position.z;
 
     var render = function () {
         requestAnimationFrame( render );
@@ -113,6 +120,14 @@
         }
         controls.update();
         renderer.render(scene, camera);
+        radje +=0.05
+        if(radje > 6.28) {radje = 0; };
+        piggy.pupilLeft.position.y = origPupilLeftY + Math.sin(radje)/12;
+        piggy.pupilLeft.position.z = origPupilLeftZ + Math.cos(radje)/12;
+        piggy.pupilRight.position.y = origPupilRightY + Math.sin(radje)/12;
+        piggy.pupilRight.position.z = origPupilRightZ + Math.cos(radje)/12;
+        //piggy.pupilLeft.position.y += .0;
+
     };
 
     render();
